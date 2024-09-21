@@ -1,37 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:fruits_app/core/utils/app_images.dart';
-import 'package:fruits_app/featuers/onBoarding/presentation/views/widgets/page_view_item.dart';
+import 'package:fruits_app/featuers/onBoarding/presentation/views/widgets/custom_on_boarding_buttom.dart';
+import 'package:fruits_app/featuers/onBoarding/presentation/views/widgets/page_view_of_on_boarding.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnBoardingBody extends StatelessWidget {
+class OnBoardingBody extends StatefulWidget {
   const OnBoardingBody({super.key});
+
+  @override
+  State<OnBoardingBody> createState() => _OnBoardingBodyState();
+}
+
+class _OnBoardingBodyState extends State<OnBoardingBody> {
+  final controller = PageController(initialPage: 0);
+
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: PageView(
-            children: const [
-              PageViewItem(
-                  mainImage: Assets.imagesPageViewItem1BackgroundImage,
-                  subImage: Assets.imagesPageViewItem1Image,
-                  subText:
-                      'اكتشف تجربة تسوق فريدة مع FruitHUB. استكشف مجموعتنا الواسعة من الفواكه الطازجة الممتازة واحصل على أفضل العروض والجودة العالية',
-                  mainTextFirst: 'Fruit',
-                  mainTextSecond: 'HUB',
-                  mainTextLast: ' مرحبا بك في '),
-              PageViewItem(
-                  mainImage: Assets.imagesPageViewItem2BackgroundImage,
-                  subImage: Assets.imagesPageViewItem2Image,
-                  subText:
-                      'نقدم لك أفضل الفواكه المختارة بعناية. اطلع على التفاصيل والصور والتقييمات لتتأكد من اختيار الفاكهة المثالية',
-                  mainTextFirst: '',
-                  mainTextSecond: '',
-                  mainTextLast: 'ابحث وتسوق'),
-              // PageViewItem(),
-            ],
+        PageViewOfOnBoarding(
+          onPageChangedValue: (value) {
+            index = value;
+            setState(() {});
+          },
+          controller: controller,
+        ),
+        SmoothPageIndicator(
+          controller: controller,
+          count: 2,
+          effect: WormEffect(
+            dotWidth: 12,
+            dotColor: const Color(0xff5DB957).withOpacity(0.5),
+            activeDotColor: const Color(0xff1B5E37),
+            dotHeight: 12,
+            type: WormType.thinUnderground,
           ),
         ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+        index == 1
+            ? const Padding(
+                padding: EdgeInsets.only(bottom: 12),
+                child: customOnBoardingButtom(),
+              )
+            : const SizedBox(),
       ],
     );
   }

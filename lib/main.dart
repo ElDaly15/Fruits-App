@@ -6,7 +6,8 @@ import 'package:fruits_app/featuers/splash/presentation/views/splash_view.dart';
 import 'package:fruits_app/generated/l10n.dart';
 
 void main() {
-  runApp(DevicePreview(enabled: true, builder: (context) => const FruitsApp()));
+  runApp(
+      DevicePreview(enabled: false, builder: (context) => const FruitsApp()));
 }
 
 class FruitsApp extends StatelessWidget {

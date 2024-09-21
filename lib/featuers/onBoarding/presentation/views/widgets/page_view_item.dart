@@ -11,6 +11,7 @@ class PageViewItem extends StatelessWidget {
     required this.mainTextFirst,
     required this.mainTextSecond,
     required this.mainTextLast,
+    required this.indexOfPage,
   });
 
   final String mainImage,
@@ -19,6 +20,8 @@ class PageViewItem extends StatelessWidget {
       mainTextSecond,
       mainTextLast,
       subText;
+
+  final int indexOfPage;
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +47,20 @@ class PageViewItem extends StatelessWidget {
                   subImage,
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 22),
-                child: SafeArea(
-                  child: Text(
-                    'تخط',
-                    style: TextStyles.regular13.copyWith(
-                        fontFamily: 'Cairo', color: const Color(0xff949D9E)),
-                  ),
-                ),
-              ),
+              indexOfPage == 0
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 22),
+                      child: SafeArea(
+                        child: Text(
+                          'تخط',
+                          style: TextStyles.regular13.copyWith(
+                              fontFamily: 'Cairo',
+                              color: const Color(0xff949D9E)),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
@@ -65,6 +71,10 @@ class PageViewItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
+              mainTextLast,
+              style: TextStyles.bold23.copyWith(fontFamily: 'Cairo'),
+            ),
+            Text(
               mainTextFirst,
               style: TextStyles.bold23.copyWith(
                   color: const Color(0xff1B5E37), fontFamily: 'Cairo'),
@@ -73,10 +83,6 @@ class PageViewItem extends StatelessWidget {
               mainTextSecond,
               style: TextStyles.bold23.copyWith(
                   color: const Color(0xffF4A91F), fontFamily: 'Cairo'),
-            ),
-            Text(
-              mainTextLast,
-              style: TextStyles.bold23.copyWith(fontFamily: 'Cairo'),
             ),
           ],
         ),
