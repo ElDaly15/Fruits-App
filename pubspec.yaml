@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
@@ -91,7 +92,6 @@ flutter_assets:
   field_prefix: null
 flutter_intl:
   enabled: true
-
 
   flutter_launcher_icons:
     android: "launcher_icon"
