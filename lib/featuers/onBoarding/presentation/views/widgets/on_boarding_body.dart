@@ -46,7 +46,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
           visible: index == 1,
           child: Padding(
             padding:
-                const EdgeInsets.only(bottom: 43, top: 16, right: 32, left: 32),
+                const EdgeInsets.only(bottom: 43, top: 32, right: 32, left: 32),
             child: CustomButtom(
               text: 'ابدأ الان',
               onPressed: () {},
