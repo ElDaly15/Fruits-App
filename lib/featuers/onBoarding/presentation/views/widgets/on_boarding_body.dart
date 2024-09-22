@@ -31,25 +31,28 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
           count: 2,
           effect: WormEffect(
             dotWidth: 12,
-            dotColor: const Color(0xff5DB957).withOpacity(0.5),
+            dotColor: index == 1
+                ? const Color(0xff1B5E37)
+                : const Color(0xff5DB957).withOpacity(0.5),
             activeDotColor: const Color(0xff1B5E37),
             dotHeight: 12,
             type: WormType.thinUnderground,
           ),
         ),
-        index == 1
-            ? Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 43, top: 8, right: 32, left: 32),
-                child: CustomButtom(
-                  text: 'ابدأ الان',
-                  onPressed: () {},
-                ),
-              )
-            : const Padding(
-                padding: EdgeInsets.only(bottom: 43),
-                child: SizedBox(),
-              ),
+        Visibility(
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          visible: index == 1,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 43, top: 16, right: 32, left: 32),
+            child: CustomButtom(
+              text: 'ابدأ الان',
+              onPressed: () {},
+            ),
+          ),
+        ),
       ],
     );
   }
