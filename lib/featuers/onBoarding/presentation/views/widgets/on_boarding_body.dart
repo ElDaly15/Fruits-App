@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fruits_app/featuers/onBoarding/presentation/views/widgets/custom_on_boarding_buttom.dart';
+import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
 import 'package:fruits_app/featuers/onBoarding/presentation/views/widgets/page_view_of_on_boarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -37,13 +37,19 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
             type: WormType.thinUnderground,
           ),
         ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.1),
         index == 1
-            ? const Padding(
-                padding: EdgeInsets.only(bottom: 12),
-                child: customOnBoardingButtom(),
+            ? Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 43, top: 8, right: 32, left: 32),
+                child: CustomButtom(
+                  text: 'ابدأ الان',
+                  onPressed: () {},
+                ),
               )
-            : const SizedBox(),
+            : const Padding(
+                padding: EdgeInsets.only(bottom: 43),
+                child: SizedBox(),
+              ),
       ],
     );
   }
