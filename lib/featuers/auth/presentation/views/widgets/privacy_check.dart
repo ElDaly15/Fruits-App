@@ -27,8 +27,7 @@ class _CheckBoxForPrivacyState extends State<PrivacyCheck> {
               });
             },
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width - (16 * 2) - 24,
+          Expanded(
             child: Text.rich(
               TextSpan(
                 children: [
