@@ -11,8 +11,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setup(); // SetUp Singleton
   getIt<CacheHelper>().init();
-  runApp(
-      DevicePreview(enabled: false, builder: (context) => const FruitsApp()));
+  runApp(DevicePreview(enabled: true, builder: (context) => const FruitsApp()));
 }
 
 class FruitsApp extends StatelessWidget {
