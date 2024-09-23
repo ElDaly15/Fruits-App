@@ -30,7 +30,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
           selectionHandleColor: Color(0xff1B5E37), // Handle color
         ),
       ),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'هذا الحقل مطلوب';
+          }
+          if (value.length < 8 && widget.isPassword) {
+            return 'يجب أن تكون كلمة المرور على الأقل 8 أحرف';
+          }
+
+          // Check for at least one special character
+          RegExp specialCharPattern = RegExp(r'[!@#\$&*~]');
+          if (!specialCharPattern.hasMatch(value) && widget.isPassword) {
+            return 'يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل';
+          }
+
+          return null;
+        },
         onChanged: widget.onChanged,
         obscureText: widget.obscureText,
         decoration: InputDecoration(
