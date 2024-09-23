@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
-import 'package:fruits_app/featuers/auth/presentation/views/widgets/custom_forget_password.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
-import 'package:fruits_app/featuers/auth/presentation/views/widgets/custom_or_divider.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/have_or_not_account_widget.dart';
-import 'package:fruits_app/featuers/auth/presentation/views/widgets/login_social_items.dart';
+import 'package:fruits_app/featuers/auth/presentation/views/widgets/privacy_check.dart';
 
-class LoginViewBody extends StatefulWidget {
-  const LoginViewBody({super.key});
+class RegisterViewBody extends StatefulWidget {
+  const RegisterViewBody({super.key});
 
   @override
-  State<LoginViewBody> createState() => _LoginViewBodyState();
+  State<RegisterViewBody> createState() => _RegisterViewBodyState();
 }
 
-class _LoginViewBodyState extends State<LoginViewBody> {
+class _RegisterViewBodyState extends State<RegisterViewBody> {
   final formKey = GlobalKey<FormState>();
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
@@ -27,6 +25,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
         autovalidateMode: autovalidateMode,
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16, left: 16, top: 22),
+              child: CustomTextField(
+                hintText: 'الأسم كامل',
+                obscureText: false,
+                isPassword: false,
+                onChanged: (value) {},
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: CustomTextField(
@@ -46,9 +53,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: CustomForgetPasswordWidget(
-                onPressed: () {},
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: PrivacyCheck(
+                onValueChanged: (value) {},
               ),
             ),
             Padding(
@@ -61,25 +68,17 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       setState(() {});
                     }
                   },
-                  text: 'تسجيل دخول'),
+                  text: 'إنشاء حساب جديد'),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 28),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: HaveOrNotAccountWidget(
                 onTap: () {
                   Navigator.pushNamed(context, RegisterView.routeName);
                 },
-                firstText: 'لا تمتلك حساب؟ ',
-                secondText: 'قم بإنشاء حساب',
+                firstText: 'تمتلك حساب بالفعل؟ ',
+                secondText: 'تسجيل دخول',
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: CustomOrDivider(),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: LoginSocialItems(),
             ),
           ],
         ),
