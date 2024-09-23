@@ -30,7 +30,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
         side: const BorderSide(
           style: BorderStyle.solid,
           width: 1.0,
-          color: AppColors.primaryColor, // Border color
+          color: Color(0xffDDDFDF), // Border color
         ),
         value: isChecked,
         onChanged: (bool? value) {

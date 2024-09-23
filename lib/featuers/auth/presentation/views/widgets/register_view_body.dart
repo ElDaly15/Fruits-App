@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
-import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/have_or_not_account_widget.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/privacy_check.dart';
@@ -55,6 +54,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: PrivacyCheck(
+                onTap: () {},
                 onValueChanged: (value) {},
               ),
             ),
@@ -74,7 +74,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: HaveOrNotAccountWidget(
                 onTap: () {
-                  Navigator.pushNamed(context, RegisterView.routeName);
+                  Navigator.pop(context);
                 },
                 firstText: 'تمتلك حساب بالفعل؟ ',
                 secondText: 'تسجيل دخول',
