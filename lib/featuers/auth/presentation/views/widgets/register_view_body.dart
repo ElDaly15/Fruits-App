@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
+import 'package:fruits_app/featuers/auth/presentation/manager/create_user_cubit/create_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/have_or_not_account_widget.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/privacy_check.dart';
 
@@ -13,7 +15,7 @@ class RegisterViewBody extends StatefulWidget {
 
 class _RegisterViewBodyState extends State<RegisterViewBody> {
   final formKey = GlobalKey<FormState>();
-
+  String? email, password, name;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
@@ -30,7 +32,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 hintText: 'الأسم كامل',
                 obscureText: false,
                 isPassword: false,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  name = value;
+                },
               ),
             ),
             Padding(
@@ -39,7 +43,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 hintText: 'البريد الالكتروني',
                 obscureText: false,
                 isPassword: false,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
               ),
             ),
             Padding(
@@ -48,7 +54,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 hintText: 'كلمه المرور',
                 obscureText: true,
                 isPassword: true,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  password = value;
+                },
               ),
             ),
             Padding(
@@ -61,8 +69,11 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: CustomButtom(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
+                      await BlocProvider.of<CreateUserCubit>(context)
+                          .createUserWithEmailAndPassword(
+                              email!, password!, name!);
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
