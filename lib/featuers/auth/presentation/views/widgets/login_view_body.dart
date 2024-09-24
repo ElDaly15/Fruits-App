@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
+import 'package:fruits_app/featuers/auth/presentation/manager/login_user_cubit/login_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/custom_forget_password.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
@@ -16,7 +18,7 @@ class LoginViewBody extends StatefulWidget {
 
 class _LoginViewBodyState extends State<LoginViewBody> {
   final formKey = GlobalKey<FormState>();
-
+  String? email, password;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
@@ -33,7 +35,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 hintText: 'البريد الالكتروني',
                 obscureText: false,
                 isPassword: false,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
               ),
             ),
             Padding(
@@ -42,7 +46,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 hintText: 'كلمه المرور',
                 obscureText: true,
                 isPassword: true,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  password = value;
+                },
               ),
             ),
             Padding(
@@ -56,6 +62,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               child: CustomButtom(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      BlocProvider.of<LoginUserCubit>(context)
+                          .createUserWithEmailAndPassword(
+                              email: email!, password: password!);
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});

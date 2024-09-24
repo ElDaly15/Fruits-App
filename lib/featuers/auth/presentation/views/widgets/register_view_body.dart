@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fruits_app/core/helper/singleton_helper.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
+import 'package:fruits_app/core/widgets/custom_snack_bar.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
 import 'package:fruits_app/featuers/auth/presentation/manager/create_user_cubit/create_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/have_or_not_account_widget.dart';
@@ -16,6 +18,7 @@ class RegisterViewBody extends StatefulWidget {
 class _RegisterViewBodyState extends State<RegisterViewBody> {
   final formKey = GlobalKey<FormState>();
   String? email, password, name;
+  bool isAcceptedTerms = false;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
@@ -63,7 +66,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: PrivacyCheck(
                 onTap: () {},
-                onValueChanged: (value) {},
+                onValueChanged: (value) {
+                  isAcceptedTerms = value!;
+                },
               ),
             ),
             Padding(
@@ -71,9 +76,16 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               child: CustomButtom(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await BlocProvider.of<CreateUserCubit>(context)
-                          .createUserWithEmailAndPassword(
-                              email!, password!, name!);
+                      if (isAcceptedTerms) {
+                        await BlocProvider.of<CreateUserCubit>(context)
+                            .createUserWithEmailAndPassword(
+                                email!, password!, name!);
+                      } else {
+                        getIt<CustomSnackBar>().showCustomSnackBar(
+                            context: context,
+                            message:
+                                'برجاء قراءه الشروط والاحكام والموافقه عليها ');
+                      }
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
