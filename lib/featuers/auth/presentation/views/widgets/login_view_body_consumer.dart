@@ -15,11 +15,7 @@ class CustomLoginViewBodyConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginUserCubit, LoginUserState>(
       listener: (context, state) {
-        if (state is LoginUserSuccess) {
-          print(state.userEntity.name);
-          print(state.userEntity.email);
-          print(state.userEntity.uid);
-        }
+        if (state is LoginUserSuccess) {}
 
         if (state is LoginUserFailuer) {
           getIt<CustomSnackBar>()

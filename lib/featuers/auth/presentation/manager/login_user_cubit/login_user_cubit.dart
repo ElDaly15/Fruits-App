@@ -1,7 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fruits_app/featuers/auth/domain/entites/user_entity.dart';
 import 'package:fruits_app/featuers/auth/domain/repos/auth_repo.dart';
+// ignore: unnecessary_import
 import 'package:meta/meta.dart';
 
 part 'login_user_state.dart';

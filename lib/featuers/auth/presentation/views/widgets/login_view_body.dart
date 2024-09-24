@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/widgets/custom_app_buttom.dart';
 import 'package:fruits_app/featuers/auth/presentation/manager/login_user_cubit/login_user_cubit.dart';
+import 'package:fruits_app/featuers/auth/presentation/views/forget_password_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/custom_forget_password.dart';
 import 'package:fruits_app/core/widgets/custom_text_field.dart';
@@ -54,7 +55,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: CustomForgetPasswordWidget(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ForgetPasswordView.routeName);
+                },
               ),
             ),
             Padding(

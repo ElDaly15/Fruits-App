@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruits_app/featuers/auth/presentation/views/forget_password_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/login_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
 import 'package:fruits_app/featuers/onBoarding/presentation/views/on_boarding_view.dart';
@@ -14,6 +15,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const OnBoardingView());
     case RegisterView.routeName:
       return MaterialPageRoute(builder: (context) => const RegisterView());
+    case ForgetPasswordView.routeName:
+      return MaterialPageRoute(
+          builder: (context) => const ForgetPasswordView());
     default:
       return MaterialPageRoute(builder: (context) => const SplashView());
   }

@@ -40,10 +40,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
           }
 
           // Check for at least one special character
-          RegExp specialCharPattern = RegExp(r'[!@#\$&*~]');
-          if (!specialCharPattern.hasMatch(value) && widget.isPassword) {
-            return 'يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل';
-          }
 
           return null;
         },
