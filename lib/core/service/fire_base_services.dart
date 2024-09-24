@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
@@ -60,10 +61,10 @@ class FireBaseServices {
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
         getIt<CustomSnackBar>().showCustomSnackBar(
-          message: 'يرجى التحقق من بريدك الالكتروني',
-          // ignore: use_build_context_synchronously
-          context: context,
-        );
+            message: 'يرجى التحقق من بريدك الالكتروني',
+            // ignore: use_build_context_synchronously
+            context: context,
+            type: AnimatedSnackBarType.warning);
       }
 
       // If everything is fine, return the user
@@ -101,12 +102,13 @@ class FireBaseServices {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       getIt<CustomSnackBar>().showCustomSnackBar(
           message: 'تم ارسال رابط اعاده تعيين كلمه المرور بنجاح',
-          context: context);
+          context: context,
+          type: AnimatedSnackBarType.success);
     } catch (error) {
       getIt<CustomSnackBar>().showCustomSnackBar(
-        message: 'حدث خطأ غير متوقع , حاول مرة اخرى',
-        context: context,
-      );
+          message: 'حدث خطأ غير متوقع , حاول مرة اخرى',
+          context: context,
+          type: AnimatedSnackBarType.error);
     }
   }
 }

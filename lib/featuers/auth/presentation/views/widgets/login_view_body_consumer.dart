@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/helper/singleton_helper.dart';
@@ -18,8 +19,10 @@ class CustomLoginViewBodyConsumer extends StatelessWidget {
         if (state is LoginUserSuccess) {}
 
         if (state is LoginUserFailuer) {
-          getIt<CustomSnackBar>()
-              .showCustomSnackBar(context: context, message: state.message);
+          getIt<CustomSnackBar>().showCustomSnackBar(
+              context: context,
+              message: state.message,
+              type: AnimatedSnackBarType.error);
         }
       },
       builder: (context, state) {

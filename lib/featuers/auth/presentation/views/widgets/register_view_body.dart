@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/helper/singleton_helper.dart';
@@ -84,7 +87,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         getIt<CustomSnackBar>().showCustomSnackBar(
                             context: context,
                             message:
-                                'برجاء قراءه الشروط والاحكام والموافقه عليها ');
+                                'برجاء قراءه الشروط والاحكام والموافقه عليها ',
+                            type: AnimatedSnackBarType.warning);
                       }
                     } else {
                       autovalidateMode = AutovalidateMode.always;

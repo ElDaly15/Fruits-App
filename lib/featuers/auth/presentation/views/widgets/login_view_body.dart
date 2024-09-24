@@ -70,6 +70,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               context: context,
                               email: email!,
                               password: password!);
+                      FocusScope.of(context).unfocus();
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});

@@ -50,6 +50,7 @@ class _ForgetPasswordBodyViewState extends State<ForgetPasswordBodyView> {
                     await getIt<FireBaseServices>()
                         .sendPasswordResetEmail(email!, context);
                     Navigator.pop(context);
+                    FocusScope.of(context).unfocus();
                   } else {
                     autovalidateMode = AutovalidateMode.always;
                     setState(() {});

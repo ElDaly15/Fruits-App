@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/helper/singleton_helper.dart';
@@ -18,14 +19,18 @@ class RegisterViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is CreateUserSuccess) {
           Navigator.pop(context);
+          FocusScope.of(context).unfocus();
           getIt<CustomSnackBar>().showCustomSnackBar(
               context: context,
               message:
-                  'تم إنشاء الحساب بنجاح , برجاء التحقق من البريد الالكتروني');
+                  'تم إنشاء الحساب بنجاح , برجاء التحقق من البريد الالكتروني',
+              type: AnimatedSnackBarType.success);
         }
         if (state is CreateUserFailuer) {
-          getIt<CustomSnackBar>()
-              .showCustomSnackBar(context: context, message: state.message);
+          getIt<CustomSnackBar>().showCustomSnackBar(
+              context: context,
+              message: state.message,
+              type: AnimatedSnackBarType.error);
         }
       },
       builder: (context, state) {
