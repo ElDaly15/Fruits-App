@@ -16,7 +16,13 @@ class RegisterViewBodyBlocConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CreateUserCubit, CreateUserState>(
       listener: (context, state) {
-        if (state is CreateUserSuccess) {}
+        if (state is CreateUserSuccess) {
+          Navigator.pop(context);
+          getIt<CustomSnackBar>().showCustomSnackBar(
+              context: context,
+              message:
+                  'تم إنشاء الحساب بنجاح , برجاء التحقق من البريد الالكتروني');
+        }
         if (state is CreateUserFailuer) {
           getIt<CustomSnackBar>()
               .showCustomSnackBar(context: context, message: state.message);

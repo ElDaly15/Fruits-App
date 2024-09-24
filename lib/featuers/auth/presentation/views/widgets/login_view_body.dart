@@ -64,7 +64,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     if (formKey.currentState!.validate()) {
                       BlocProvider.of<LoginUserCubit>(context)
                           .createUserWithEmailAndPassword(
-                              email: email!, password: password!);
+                              context: context,
+                              email: email!,
+                              password: password!);
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});

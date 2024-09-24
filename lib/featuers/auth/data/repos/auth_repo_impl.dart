@@ -29,11 +29,12 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failuer, UserEntity>> signInWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, context) async {
     try {
       var user = await fireBaseServices.signInWithEmailAndPassword(
         email: email,
         password: password,
+        context: context,
       );
       return right(UserModel.fromFirebase(user));
     } on CustomException catch (e) {

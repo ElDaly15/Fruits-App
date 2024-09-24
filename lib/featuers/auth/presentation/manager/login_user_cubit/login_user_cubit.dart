@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:fruits_app/featuers/auth/domain/entites/user_entity.dart';
 import 'package:fruits_app/featuers/auth/domain/repos/auth_repo.dart';
 import 'package:meta/meta.dart';
@@ -10,9 +11,12 @@ class LoginUserCubit extends Cubit<LoginUserState> {
   final AuthRepo authRepo;
 
   Future<void> createUserWithEmailAndPassword(
-      {required String email, required String password}) async {
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     emit(LoginUserLoading());
-    var result = await authRepo.signInWithEmailAndPassword(email, password);
+    var result =
+        await authRepo.signInWithEmailAndPassword(email, password, context);
     result.fold(
       (failuer) => emit(LoginUserFailuer(message: failuer.message)),
       (user) => emit(LoginUserSuccess(userEntity: user)),

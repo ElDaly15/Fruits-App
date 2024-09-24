@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
+import 'package:fruits_app/core/helper/singleton_helper.dart';
+import 'package:fruits_app/core/widgets/custom_snack_bar.dart';
 
 class FireBaseServices {
   Future<User> createUserWithEmailAndPassword({
@@ -16,6 +19,7 @@ class FireBaseServices {
       );
       await credential.user!.updateDisplayName(name);
       await credential.user!.reload();
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
       return FirebaseAuth.instance.currentUser!;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -31,18 +35,38 @@ class FireBaseServices {
     }
   }
 
-  Future<User> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<User> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
     try {
+      // Sign in the user
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+        getIt<CustomSnackBar>().showCustomSnackBar(
+          message: 'يرجى التحقق من بريدك الالكتروني',
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+
+      // If everything is fine, return the user
       return credential.user!;
     } on FirebaseAuthException catch (e) {
-      if (e.code == e.code) {
-        throw CustomException(message: 'كلمه المرور او الايميل غير صحيحه');
-      } else if (e.code == 'wrong-password') {
-        throw CustomException(message: 'كلمة المرور خاطئة');
+      if (e.code == e.code && e.code != 'too-many-requests') {
+        throw CustomException(
+            message: 'كلمة المرور او البريد الالكتروني خاطئة');
+      } else if (e.code == 'user-not-found') {
+        throw CustomException(
+            message: 'لا يوجد مستخدم مسجل بهذا البريد الإلكتروني');
+      } else if (e.code == 'too-many-requests') {
+        throw CustomException(
+            message: 'برجاء الانتظار لحظة واحدة قبل اعاده المحاوله');
       } else {
         throw CustomException(message: 'حدث خطأ غير متوقع , حاول مرة اخرى');
       }
