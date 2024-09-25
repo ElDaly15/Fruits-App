@@ -51,4 +51,16 @@ class AuthRepoImpl extends AuthRepo {
       return left(Failuer(message: e.message));
     }
   }
+
+  @override
+  Future<Either<Failuer, UserEntity>> signInWithFacebook() async {
+    try {
+      var user = await fireBaseServices.signInWithFacebook();
+      return right(UserModel.fromFirebase(user));
+    } on CustomException catch (e) {
+      return left(Failuer(message: e.message));
+    } catch (e) {
+      return left(Failuer(message: 'حدث خطأ غير متوقع , حاول مرة اخرى'));
+    }
+  }
 }

@@ -34,7 +34,9 @@ class LoginSocialItems extends StatelessWidget {
           ),
         ),
         LoginSocialItem(
-          onTap: () {},
+          onTap: () {
+            BlocProvider.of<LoginUserCubit>(context).signInWithFacebook();
+          },
           image: Assets.imagesFacebookIcon,
           text: 'تسجيل بواسطه فيسبوك',
         ),
