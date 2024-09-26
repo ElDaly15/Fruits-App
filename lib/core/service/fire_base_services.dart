@@ -69,7 +69,6 @@ class FireBaseServices {
             type: AnimatedSnackBarType.warning);
       }
 
-      // If everything is fine, return the user
       return credential.user!;
     } on FirebaseAuthException catch (e) {
       if (e.code == e.code &&
