@@ -15,4 +15,11 @@ class UserModel extends UserEntity {
       uid: user.uid,
     );
   }
+  factory UserModel.fromFireStore(Map<String, dynamic> doc) {
+    return UserModel(
+      email: doc['email'],
+      name: doc['name'],
+      uid: doc['uid'],
+    );
+  }
 }

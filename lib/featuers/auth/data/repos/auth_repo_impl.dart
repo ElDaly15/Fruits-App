@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
 import 'package:fruits_app/core/errors/failuer.dart';
 import 'package:fruits_app/core/service/dataBase_services.dart';
@@ -20,15 +21,24 @@ class AuthRepoImpl extends AuthRepo {
     String password,
     String name,
   ) async {
+    User? user;
     try {
-      var user = await fireBaseServices.createUserWithEmailAndPassword(
+      user = await fireBaseServices.createUserWithEmailAndPassword(
           email: email, password: password, name: name);
 
       await addUserData(userEntity: UserModel.fromFirebase(user));
 
       return right(UserModel.fromFirebase(user));
     } on CustomException catch (e) {
+      if (user != null) {
+        await fireBaseServices.deleteAccount();
+      }
       return left(Failuer(message: e.message));
+    } catch (e) {
+      if (user != null) {
+        await fireBaseServices.deleteAccount();
+      }
+      return left(Failuer(message: 'حدث خطأ غير متوقع , حاول مرة اخرى'));
     }
   }
 
@@ -41,7 +51,11 @@ class AuthRepoImpl extends AuthRepo {
         password: password,
         context: context,
       );
-      return right(UserModel.fromFirebase(user));
+
+      UserEntity userEntity =
+          await getUserData(path: 'UsersData', uid: user.uid);
+
+      return right(userEntity);
     } on CustomException catch (e) {
       return left(Failuer(message: e.message));
     }
@@ -49,11 +63,27 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failuer, UserEntity>> signInWithGoogle() async {
+    User? user;
     try {
-      var user = await fireBaseServices.signInWithGoogle();
-      return right(UserModel.fromFirebase(user));
+      user = await fireBaseServices.signInWithGoogle();
+
+      bool checkData = await searchUser(path: 'UsersData', uid: user.uid);
+      if (!checkData) {
+        await addUserData(userEntity: UserModel.fromFirebase(user));
+      }
+      UserEntity userEntity =
+          await getUserData(path: 'UsersData', uid: user.uid);
+      return right(userEntity);
     } on CustomException catch (e) {
+      if (user != null) {
+        await fireBaseServices.deleteAccount();
+      }
       return left(Failuer(message: e.message));
+    } catch (e) {
+      if (user != null) {
+        await fireBaseServices.deleteAccount();
+      }
+      return left(Failuer(message: 'حدث خطأ غير متوقع , حاول مرة اخرى'));
     }
   }
 
@@ -72,10 +102,23 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future addUserData({required UserEntity userEntity}) async {
     try {
-      await databaseServices.addData(
+      await databaseServices.addData(userEntity.uid,
           path: 'UsersData', data: userEntity.toMap());
     } catch (e) {
       throw CustomException(message: 'حدث خطأ غير متوقع , حاول مرة اخرى');
     }
+  }
+
+  @override
+  Future<bool> searchUser({required String path, required String uid}) async {
+    bool value = await databaseServices.searchUser(path: path, uid: uid);
+    return value;
+  }
+
+  @override
+  Future<UserEntity> getUserData(
+      {required String path, required String uid}) async {
+    return UserModel.fromFireStore(
+        await databaseServices.getData(path: path, documentId: uid));
   }
 }

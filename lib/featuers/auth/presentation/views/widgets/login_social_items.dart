@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/utils/app_images.dart';
 import 'package:fruits_app/featuers/auth/presentation/manager/login_user_cubit/login_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/login_with_social_item.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginSocialItems extends StatelessWidget {
   const LoginSocialItems({super.key});
@@ -23,7 +24,9 @@ class LoginSocialItems extends StatelessWidget {
         ),
         LoginSocialItem(
           onTap: () {
-            BlocProvider.of<LoginUserCubit>(context).signInWithFacebook();
+            GoogleSignIn googleSignIn = GoogleSignIn();
+            googleSignIn.disconnect();
+            // BlocProvider.of<LoginUserCubit>(context).signInWithFacebook();
           },
           image: Assets.imagesFacebookIcon,
           text: 'تسجيل بواسطه فيسبوك',
