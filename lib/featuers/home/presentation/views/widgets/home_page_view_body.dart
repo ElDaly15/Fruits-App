@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:fruits_app/core/widgets/custom_search_text_field.dart';
 import 'package:fruits_app/featuers/home/presentation/views/widgets/custom_home_view_app_bar.dart';
 
 class HomePageViewBody extends StatelessWidget {
@@ -7,10 +7,16 @@ class HomePageViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        SafeArea(child: SizedBox()),
-        CustomHomeViewAppBar(),
+        const SafeArea(child: SizedBox()),
+        const CustomHomeViewAppBar(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CustomSearchTextField(
+            onChanged: (value) {},
+          ),
+        ),
       ],
     );
   }
