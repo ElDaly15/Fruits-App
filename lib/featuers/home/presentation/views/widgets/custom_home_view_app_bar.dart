@@ -16,7 +16,9 @@ class CustomHomeViewAppBar extends StatelessWidget {
       ),
       subtitle: Text('احمد مصطفي',
           style: TextStyles.bold16.copyWith(color: Colors.black)),
-      trailing: const CustomNotifactionIconWithAlert(),
+      trailing: CustomNotifactionIconWithAlert(
+        onTap: () {},
+      ),
     );
   }
 }
