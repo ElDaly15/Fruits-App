@@ -5,6 +5,7 @@ import 'package:fruits_app/core/helper/singleton_helper.dart';
 import 'package:fruits_app/core/utils/app_colors.dart';
 import 'package:fruits_app/featuers/auth/presentation/manager/login_user_cubit/login_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/login_view_body.dart';
+import 'package:fruits_app/featuers/home/presentation/views/home_page_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../../../core/widgets/custom_snack_bar.dart';
@@ -16,7 +17,9 @@ class CustomLoginViewBodyConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginUserCubit, LoginUserState>(
       listener: (context, state) {
-        if (state is LoginUserSuccess) {}
+        if (state is LoginUserSuccess) {
+          Navigator.pushReplacementNamed(context, HomePageView.routeName);
+        }
 
         if (state is LoginUserFailuer) {
           getIt<CustomSnackBar>().showCustomSnackBar(

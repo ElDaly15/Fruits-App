@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_app/core/utils/app_images.dart';
 import 'package:fruits_app/featuers/auth/presentation/manager/login_user_cubit/login_user_cubit.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/widgets/login_with_social_item.dart';
+import 'package:fruits_app/featuers/home/presentation/views/home_page_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginSocialItems extends StatelessWidget {
@@ -15,6 +16,8 @@ class LoginSocialItems extends StatelessWidget {
         LoginSocialItem(
           onTap: () async {
             await BlocProvider.of<LoginUserCubit>(context).signInWithGoogle();
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacementNamed(context, HomePageView.routeName);
           },
           image: Assets.imagesGoogleIcon,
           text: 'تسجيل بواسطه جوجل',
