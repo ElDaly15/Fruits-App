@@ -12,10 +12,17 @@ class CustomListViewOfFeatureItems extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 4,
           itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: FeatureItem(),
-            );
+            if (index == 0) {
+              return const Padding(
+                padding: EdgeInsets.only(right: 8, left: 16, top: 8, bottom: 8),
+                child: FeatureItem(),
+              );
+            } else {
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: FeatureItem(),
+              );
+            }
           }),
     );
   }
