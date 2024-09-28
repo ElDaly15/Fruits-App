@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_app/core/utils/app_text_styles.dart';
+import 'package:fruits_app/featuers/best_seller/presentation/views/best_seller_view.dart';
 
 class BestSellerHeader extends StatelessWidget {
   const BestSellerHeader({super.key});
@@ -14,7 +15,9 @@ class BestSellerHeader extends StatelessWidget {
         ),
         const Spacer(),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, BestSellerView.routeName);
+          },
           child: Text(
             'المزيد',
             style:

@@ -1,52 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fruits_app/core/utils/app_images.dart';
-import 'package:fruits_app/featuers/home/presentation/views/widgets/home_page_view_body.dart';
 import 'package:fruits_app/featuers/home/presentation/views/widgets/selected_icon.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key});
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
 
-  @override
-  State<CustomBottomNavigationBar> createState() =>
-      _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int currentIndex = 0;
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: currentIndex);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  const CustomBottomNavigationBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        children: const [
-          HomePageViewBody(),
-          Center(child: Text('المنتجات Page')),
-          Center(child: Text('سلة التسوق Page')),
-          Center(child: Text('حسابي Page')),
-        ],
-      ),
-      bottomNavigationBar: Container(
+    return SafeArea(
+      child: Container(
         height: 70,
         width: 375,
         decoration: const BoxDecoration(
@@ -58,22 +28,20 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             ),
           ],
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(22), topLeft: Radius.circular(22)),
+            topRight: Radius.circular(22),
+            topLeft: Radius.circular(22),
+          ),
           color: Colors.white,
         ),
         child: Row(
           children: [
-            const SizedBox(
-              width: 22,
-            ),
+            const SizedBox(width: 22),
             _buildAnimatedItem(
               isSelected: currentIndex == 0,
               title: 'الرئيسيه',
               selectedIcon: Assets.imagesVuesaxBoldHome,
               unselectedIcon: Assets.imagesVuesaxOutlineHome,
-              onTap: () {
-                _onTapNavigationItem(0);
-              },
+              onTap: () => onTap(0),
             ),
             const Spacer(),
             _buildAnimatedItem(
@@ -81,9 +49,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               title: 'المنتجات',
               selectedIcon: Assets.imagesVuesaxBoldProducts,
               unselectedIcon: Assets.imagesVuesaxOutlineProducts,
-              onTap: () {
-                _onTapNavigationItem(1);
-              },
+              onTap: () => onTap(1),
             ),
             const Spacer(),
             _buildAnimatedItem(
@@ -91,9 +57,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               title: 'سلة التسوق',
               selectedIcon: Assets.imagesVuesaxBoldShoppingCart,
               unselectedIcon: Assets.imagesVuesaxOutlineShoppingCart,
-              onTap: () {
-                _onTapNavigationItem(2);
-              },
+              onTap: () => onTap(2),
             ),
             const Spacer(),
             _buildAnimatedItem(
@@ -101,24 +65,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               title: 'حسابي',
               selectedIcon: Assets.imagesVuesaxBoldUser,
               unselectedIcon: Assets.imagesVuesaxOutlineUser,
-              onTap: () {
-                _onTapNavigationItem(3);
-              },
+              onTap: () => onTap(3),
             ),
-            const SizedBox(
-              width: 22,
-            ),
+            const SizedBox(width: 22),
           ],
         ),
       ),
     );
-  }
-
-  void _onTapNavigationItem(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-    _pageController.jumpToPage(index); // Jump directly to the selected page
   }
 
   Widget _buildAnimatedItem({

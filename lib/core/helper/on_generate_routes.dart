@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/forget_password_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/login_view.dart';
 import 'package:fruits_app/featuers/auth/presentation/views/register_view.dart';
+import 'package:fruits_app/featuers/best_seller/presentation/views/best_seller_view.dart';
 import 'package:fruits_app/featuers/home/presentation/views/home_page_view.dart';
 import 'package:fruits_app/featuers/onBoarding/presentation/views/on_boarding_view.dart';
 import 'package:fruits_app/featuers/splash/presentation/views/splash_view.dart';
@@ -21,6 +22,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
           builder: (context) => const ForgetPasswordView());
     case HomePageView.routeName:
       return MaterialPageRoute(builder: (context) => const HomePageView());
+    case BestSellerView.routeName:
+      return MaterialPageRoute(builder: (context) => const BestSellerView());
     default:
       return MaterialPageRoute(builder: (context) => const SplashView());
   }
