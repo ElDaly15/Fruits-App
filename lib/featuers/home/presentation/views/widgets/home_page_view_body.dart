@@ -12,7 +12,11 @@ class HomePageViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        const SliverToBoxAdapter(child: SafeArea(child: SizedBox())),
+        const SliverToBoxAdapter(
+            child: SafeArea(
+                child: SizedBox(
+          height: 30,
+        ))),
         const SliverToBoxAdapter(child: CustomHomeViewAppBar()),
         SliverToBoxAdapter(
           child: Padding(
@@ -32,6 +36,11 @@ class HomePageViewBody extends StatelessWidget {
         const SliverPadding(
           sliver: BestSellerGridView(),
           padding: EdgeInsets.symmetric(horizontal: 16),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 15,
+          ),
         ),
       ],
     );
