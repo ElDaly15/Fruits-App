@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fruits_app/core/db/cached_helper.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
 import 'package:fruits_app/core/errors/failuer.dart';
+import 'package:fruits_app/core/helper/singleton_helper.dart';
 import 'package:fruits_app/core/service/dataBase_services.dart';
 import 'package:fruits_app/core/service/fire_base_services.dart';
 import 'package:fruits_app/featuers/auth/data/models/user_model.dart';
@@ -55,6 +59,7 @@ class AuthRepoImpl extends AuthRepo {
       UserEntity userEntity =
           await getUserData(path: 'UsersData', uid: user.uid);
 
+      await getIt<AuthRepo>().saveData(userEntity: userEntity);
       return right(userEntity);
     } on CustomException catch (e) {
       return left(Failuer(message: e.message));
@@ -73,6 +78,8 @@ class AuthRepoImpl extends AuthRepo {
       }
       UserEntity userEntity =
           await getUserData(path: 'UsersData', uid: user.uid);
+
+      await getIt<AuthRepo>().saveData(userEntity: userEntity);
       return right(userEntity);
     } on CustomException catch (e) {
       if (user != null) {
@@ -120,5 +127,16 @@ class AuthRepoImpl extends AuthRepo {
       {required String path, required String uid}) async {
     return UserModel.fromFireStore(
         await databaseServices.getData(path: path, documentId: uid));
+  }
+
+  @override
+  Future saveData({required UserEntity userEntity}) async {
+    var jsonData = jsonEncode(userEntity.toMap());
+    await getIt<CacheHelper>().saveData(key: 'userData', value: jsonData);
+  }
+
+  @override
+  Future deleteData() async {
+    await getIt<CacheHelper>().removeData(key: 'userData');
   }
 }

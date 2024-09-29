@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fruits_app/core/helper/singleton_helper.dart';
+import 'package:fruits_app/core/service/fire_base_services.dart';
+import 'package:fruits_app/featuers/auth/presentation/views/login_view.dart';
 import 'package:fruits_app/featuers/home/presentation/views/widgets/custom_bottom_nav_bar.dart';
 import 'package:fruits_app/featuers/home/presentation/views/widgets/home_page_view_body.dart';
 
@@ -17,6 +20,7 @@ class _HomePageViewState extends State<HomePageView> {
   @override
   void initState() {
     super.initState();
+
     _pageController = PageController(initialPage: currentIndex);
   }
 
@@ -37,11 +41,19 @@ class _HomePageViewState extends State<HomePageView> {
             currentIndex = index;
           });
         },
-        children: const [
-          HomePageViewBody(),
-          Center(child: Text('المنتجات Page')),
-          Center(child: Text('سلة التسوق Page')),
-          Center(child: Text('حسابي Page')),
+        children: [
+          const HomePageViewBody(),
+          const Center(child: Text('المنتجات Page')),
+          const Center(child: Text('سلة التسوق Page')),
+          Center(
+              child: IconButton(
+                  onPressed: () {
+                    getIt<FireBaseServices>().signOut();
+
+                    Navigator.pushReplacementNamed(
+                        context, LoginView.routeName);
+                  },
+                  icon: const Icon(Icons.settings))),
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(

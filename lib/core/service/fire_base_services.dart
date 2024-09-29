@@ -1,11 +1,10 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
-
 import 'dart:io';
-
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:fruits_app/core/db/cached_helper.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
 import 'package:fruits_app/core/helper/singleton_helper.dart';
 import 'package:fruits_app/core/widgets/custom_snack_bar.dart';
@@ -146,5 +145,13 @@ class FireBaseServices {
     return (await FirebaseAuth.instance
             .signInWithCredential(facebookAuthCredential))
         .user!;
+  }
+
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    if (await GoogleSignIn().isSignedIn()) {
+      await GoogleSignIn().disconnect();
+    }
+    await getIt<CacheHelper>().removeData(key: 'userData');
   }
 }
