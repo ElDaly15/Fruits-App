@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fruits_app/core/errors/exceptions.dart';
 import 'package:fruits_app/core/service/dataBase_services.dart';
@@ -34,17 +33,36 @@ class FireStoreServices implements DatabaseServices {
   }
 
   @override
-  Future<Map<String, dynamic>> getData(
-      {required String path, required String documentId}) async {
+  Future<dynamic> getData(
+      {required String path,
+      String? documentId,
+      Map<String, dynamic>? query}) async {
     try {
-      DocumentSnapshot documentSnapshot =
-          await firestore.collection(path).doc(documentId).get();
+      if (documentId != null) {
+        DocumentSnapshot documentSnapshot =
+            await firestore.collection(path).doc(documentId).get();
 
-      Map<String, dynamic> doc =
-          documentSnapshot.data() as Map<String, dynamic>;
-      return doc;
+        return documentSnapshot.data();
+      } else {
+        Query<Map<String, dynamic>> result = firestore.collection(path);
+
+        if (query != null) {
+          if (query['orderBy'] != null) {
+            var orderBy = query['orderBy'];
+            var descending = query['descending'];
+            result = result.orderBy(orderBy, descending: descending);
+          }
+
+          if (query['limit'] != null) {
+            var limit = query['limit'];
+            result = result.limit(limit);
+          }
+        }
+
+        var data = await result.get();
+        return data.docs.map((doc) => doc.data()).toList();
+      }
     } catch (e) {
-      log(e.toString());
       throw CustomException(message: 'حدث خطأ غير متوقع , حاول مرة اخرى');
     }
   }

@@ -1,4 +1,6 @@
 import 'package:fruits_app/core/db/cached_helper.dart';
+import 'package:fruits_app/core/repos/product_repo/prodcut_repo_impl.dart';
+import 'package:fruits_app/core/repos/product_repo/product_repo.dart';
 import 'package:fruits_app/core/service/fire_base_services.dart';
 import 'package:fruits_app/core/service/firestore_services.dart';
 import 'package:fruits_app/core/widgets/custom_snack_bar.dart';
@@ -15,4 +17,7 @@ void setup() {
   getIt.registerSingleton<AuthRepo>(AuthRepoImpl(
       fireBaseServices: getIt<FireBaseServices>(),
       databaseServices: getIt<FireStoreServices>()));
+
+  getIt.registerSingleton<ProductRepo>(
+      ProdcutRepoImpl(getIt<FireStoreServices>()));
 }
